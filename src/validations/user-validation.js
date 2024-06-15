@@ -10,6 +10,8 @@ const createUserValidation = [
     body('birthdayDate')
 ]
 
+
+
 module.exports = {
-    createUserValidation
+    createUserValidation,
 }
