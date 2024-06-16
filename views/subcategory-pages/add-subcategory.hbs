@@ -1,0 +1,19 @@
+<section>
+    <h1>Yangi qo'shish</h1>
+    {{#if error_msg}}<p class="error">{{error_msg}}</p>{{/if}}
+    <form action="/products-controll/sub-categories/add" method="post">
+        <label for="name-inp">
+            Nom kiriting
+            <input name="name" type="text" placeholder="Sub Kategoriya uchun yangi nom kiriting">
+        </label>
+
+        <label for="category-select">Sub Kategoriya uchun mos kategoriya tanlang</label>
+        <select name="categoryId" id="category-select">
+            {{#each categories}}
+            <option value="{{this._id}}">{{this.name}}</option>
+            {{/each}}
+        </select>
+
+        <button type="submit">Qo'shish</button>
+    </form>
+</section>
