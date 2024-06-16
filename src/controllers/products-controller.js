@@ -1,4 +1,5 @@
 const categoriesModel = require("../models/categories-model");
+const categoriesService = require("../services/categories-service");
 
 
 class ProductController {
@@ -19,34 +20,48 @@ class ProductController {
     }
 
     async editCategoryPage(req, res) {
-        const id = req.params.id;
-        const category = JSON.stringify(await categoriesModel.findById(id));
+        try {
+            const id = req.params.id;
+            const category = await categoriesService.categoriesEditPage(id);
 
-        console.log(category);
-
-        return res.render('edit-category', { category: JSON.parse(category) })
+            return res.render('edit-category', { category: category })
+        } catch (error) {
+            return res.redirect('/404')
+        }
     }
 
     async addCategory(req, res) {
-        const name = req.body.name;
-        const cateogry = await categoriesModel.create({ name });
-        console.log(cateogry);
+        try {
+            const name = req.body.name;
+            await categoriesService.create(name);
 
-        return res.redirect('/products-controll/categories')
+            return res.redirect('/products-controll/categories')
+        } catch (error) {
+            console.log(error)
+            req.flash('error_msg', error.message)
+            return res.redirect('/products-controll/categories/add')
+        }
     }
 
     async editCategory(req, res) {
-        const id = req.params.id;
-        await categoriesModel.findByIdAndUpdate(id, req.body);
+        try {
+            const id = req.params.id;
+            await categoriesService.update(id, req.body.name)
 
-        return res.redirect('/products-controll/categories')
+            return res.redirect('/products-controll/categories')
+        } catch (error) {
+            return res.redirect('/products-controll/categories')
+        }
     }
 
     async delCategory(req, res) {
-        const id = req.params.id;
-        await categoriesModel.findByIdAndDelete(id);
-
-        return res.redirect('/products-controll/categories')
+        try {
+            const id = req.params.id;
+            await categoriesService.del(id);
+            return res.redirect('/products-controll/categories');
+        } catch (error) {
+            return res.redirect('/products-controll/categories');
+        }
     }
 }
 
