@@ -1,0 +1,23 @@
+<section>
+    <div>
+        <h1>Kategoriyalar: </h1>
+        <button><a href="/products-controll/categories/add">Qo'shish</a></button>
+    </div>
+
+    {{#if categories.length}}
+    <ul>
+        {{#each categories}}
+        <li>
+            <a href="#">{{this.name}}</a>
+            <div>
+                <button><a href="/products-controll/categories/edit/{{this._id}}">Tahrirlash</a></button>
+                <button><a href="/products-controll/categories/del/{{this._id}}">O'chirish</a></button>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+
+    {{else}}
+    <p>Kategoriyalar hali mavjud emas</p>
+    {{/if}}
+</section>
